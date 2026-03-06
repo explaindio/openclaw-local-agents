@@ -1,0 +1,11 @@
+models/
+llama.cpp/
+llama-cuda-src/
+llama-cuda-patched.tar.gz
+wget-log*
+quality_results/
+*.pyc
+__pycache__/
+build/
+*.o
+*.a
