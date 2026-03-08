@@ -1,0 +1,146 @@
+{
+  // OpenClaw Local Agent Configuration
+  // Two local llama-server instances on a single RTX 3090
+  // 9B (quality, thinking) on port 8090 | 2B (speed, no thinking) on port 8091
+
+  models: {
+    mode: "replace",
+    providers: {
+      "local-9b": {
+        baseUrl: "http://127.0.0.1:8090/v1",
+        apiKey: "local",
+        api: "openai-chat",
+        models: [
+          {
+            id: "qwen3.5-9b",
+            name: "Qwen3.5 9B (Quality)",
+            reasoning: true,
+            input: ["text"],
+            cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+            contextWindow: 262144,
+            maxTokens: 10240,
+          },
+        ],
+      },
+      "local-2b": {
+        baseUrl: "http://127.0.0.1:8091/v1",
+        apiKey: "local",
+        api: "openai-chat",
+        models: [
+          {
+            id: "qwen3.5-2b",
+            name: "Qwen3.5 2B (Speed)",
+            reasoning: false,
+            input: ["text"],
+            cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+            contextWindow: 262144,
+            maxTokens: 4096,
+          },
+        ],
+      },
+    },
+  },
+
+  agents: {
+    defaults: {
+      workspace: "~/.openclaw/workspace",
+      model: { primary: "local-9b/qwen3.5-9b" },
+    },
+    list: [
+      // ═══════════════════════════════════════════
+      // 9B Quality Agents (port 8090) — thinking ON
+      // ═══════════════════════════════════════════
+
+      {
+        id: "main",
+        default: true,
+        name: "Orchestrator",
+        model: "local-9b/qwen3.5-9b",
+        workspace: "~/.openclaw/workspace-main",
+      },
+      {
+        id: "campaign-strategist",
+        name: "Campaign Strategist",
+        model: "local-9b/qwen3.5-9b",
+        workspace: "~/.openclaw/workspace-campaign-strategist",
+      },
+      {
+        id: "seo-article-writer",
+        name: "SEO Article Writer",
+        model: "local-9b/qwen3.5-9b",
+        workspace: "~/.openclaw/workspace-seo-article-writer",
+      },
+      {
+        id: "compliance-qa",
+        name: "Compliance QA",
+        model: "local-9b/qwen3.5-9b",
+        workspace: "~/.openclaw/workspace-compliance-qa",
+      },
+      {
+        id: "analytics-optimizer",
+        name: "Analytics Optimizer",
+        model: "local-9b/qwen3.5-9b",
+        workspace: "~/.openclaw/workspace-analytics-optimizer",
+      },
+      {
+        id: "ui-engineer",
+        name: "UI Engineer",
+        model: "local-9b/qwen3.5-9b",
+        workspace: "~/.openclaw/workspace-ui-engineer",
+      },
+      {
+        id: "backend-architect",
+        name: "Backend Architect",
+        model: "local-9b/qwen3.5-9b",
+        workspace: "~/.openclaw/workspace-backend-architect",
+      },
+
+      // ═══════════════════════════════════════════
+      // 2B Speed Agents (port 8091) — thinking OFF
+      // ═══════════════════════════════════════════
+
+      {
+        id: "trend-scout",
+        name: "Trend Scout",
+        model: "local-2b/qwen3.5-2b",
+        workspace: "~/.openclaw/workspace-trend-scout",
+      },
+      {
+        id: "offer-hunter",
+        name: "Offer Hunter",
+        model: "local-2b/qwen3.5-2b",
+        workspace: "~/.openclaw/workspace-offer-hunter",
+      },
+      {
+        id: "shortscript-writer",
+        name: "Short Script Writer",
+        model: "local-2b/qwen3.5-2b",
+        workspace: "~/.openclaw/workspace-shortscript-writer",
+      },
+      {
+        id: "post-writer",
+        name: "Post Writer",
+        model: "local-2b/qwen3.5-2b",
+        workspace: "~/.openclaw/workspace-post-writer",
+      },
+      {
+        id: "voice-agent",
+        name: "Voice Agent",
+        model: "local-2b/qwen3.5-2b",
+        workspace: "~/.openclaw/workspace-voice-agent",
+      },
+      {
+        id: "ugc-video-agent",
+        name: "UGC Video Agent",
+        model: "local-2b/qwen3.5-2b",
+        workspace: "~/.openclaw/workspace-ugc-video-agent",
+      },
+      {
+        id: "agile-dev",
+        name: "Agile Developer",
+        model: "local-2b/qwen3.5-2b",
+        workspace: "~/.openclaw/workspace-agile-dev",
+      },
+    ],
+  },
+}
